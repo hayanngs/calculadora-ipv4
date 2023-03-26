@@ -5,8 +5,7 @@
 #include <csignal>
 #include "views.h"
 
-
-char views::menu_inicial() {
+void views::menu_inicial() {
     char opcao_inicial = 1;
     while (opcao_inicial != '0') {
         std::cout << "Calculadora IPv4" << std::endl;
@@ -15,8 +14,7 @@ char views::menu_inicial() {
 
         std::cout << "Opções:" << std::endl;
         std::cout << "1 - Calcular IP com classe" << std::endl;
-        std::cout << "2 - Calcular IP sem classe com notação CIDR" << std::endl;
-        std::cout << "3 - Calcular IP sem classe com notação decimal" << std::endl;
+        std::cout << "2 - Calcular IP sem classe" << std::endl;
         std::cout << "0 - Sair" << std::endl;
         std::cout << "> Digite o número da opção desejada: ";
 
@@ -27,9 +25,7 @@ char views::menu_inicial() {
         if (opcao_inicial == '1') {
             calcular_ip_com_classe();
         } else if (opcao_inicial == '2') {
-            calcular_ip_sem_classe_CIDR();
-        } else if (opcao_inicial == '3') {
-            calcular_ip_sem_classe_decimal();
+            calcular_ip_sem_classe();
         } else if (opcao_inicial == '0') {
             std:std::cout << "> Programa finalizado, Até a próxima!" << std::endl;
             sleep(3);
@@ -65,6 +61,10 @@ void views::calcular_ip_com_classe() {
 
             std::cout << get_mensagem("Endereco IP") << ip << std::endl;
             std::cout << get_mensagem("Classe") << classe << std::endl;
+            if (classe == 'D' || classe == 'E') {
+                std::cout << std::endl << std::endl;
+                continue;
+            }
             std::cout << get_mensagem("Mascara CIDR") << mascara_CIDR << std::endl;
             std::cout << get_mensagem("Mascara decimal") << mascara_decimal << std::endl;
             std::cout << get_mensagem("Quantidade de hosts") << quantidade_hosts << std::endl;
@@ -75,17 +75,18 @@ void views::calcular_ip_com_classe() {
             std::cout << std::endl << std::endl;
         } else {
             std::cout << "> IP digitado não é válido." << std::endl;
+            std::cout << std::endl << std::endl;
         }
     }
     system("clear");
 }
 
-void views::calcular_ip_sem_classe_CIDR() {
+void views::calcular_ip_sem_classe() {
     std::string ip, mascara;
     std::cout << "Calculadora IPv4" << std::endl;
-    std::cout << "Calcular IP sem classe com notação CIDR" << std::endl;
+    std::cout << "Calcular IP sem classe" << std::endl;
     while (ip != "0") {
-        std::cout << "> Digite um IP válido (w.x.y.z) ou '0' pra voltar: ";
+        std::cout << "> Digite um IP válido (n.n.n.n) ou '0' pra voltar: ";
         std::cin >> ip;
 
         if (ip == "0")
@@ -99,7 +100,7 @@ void views::calcular_ip_sem_classe_CIDR() {
             continue;
         }
 
-        std::cout << "> Digite uma máscara válida (/n): ";
+        std::cout << "> Digite uma máscara válida (/n ou n.n.n.n): ";
         std::cin >> mascara;
 
         calc.build_mascara(mascara);
@@ -109,7 +110,7 @@ void views::calcular_ip_sem_classe_CIDR() {
         }
 
         std::string mascara_decimal = calc.get_mascara();
-        std::string mascara_CIDR = mascara;
+        std::string mascara_CIDR = calc.get_mascara_cidr();
         int quantidade_hosts = calc.get_quantidade_hosts();
         std::string endereco_rede = calc.get_rede();
         std::string endereco_broadcast = calc.get_broadcast();
@@ -140,8 +141,4 @@ std::string views::get_mensagem(std::string mensagem) {
         msg += " ";
     }
     return msg;
-}
-
-void views::calcular_ip_sem_classe_decimal() {
-
 }

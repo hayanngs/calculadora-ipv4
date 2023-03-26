@@ -13,12 +13,11 @@ class views {
 private:
     std::string get_mensagem(std::string mensagem);
 public:
-    char menu_inicial();
+    void menu_inicial();
+
     void calcular_ip_com_classe();
 
-    void calcular_ip_sem_classe_CIDR();
-
-    void calcular_ip_sem_classe_decimal();
+    void calcular_ip_sem_classe();
 };
 
 #endif //CALCULADORA_IP_VIEWS_H

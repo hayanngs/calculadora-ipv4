@@ -11,7 +11,7 @@ ip_com_classe::ip_com_classe(std::string ip) {
 bool ip_com_classe::is_valid() {
     try {
         std::vector<std::string> octetos = join_to_octeto(ip);
-        if (octetos.size() > 4) {
+        if (octetos.size() < 4 || octetos.size() > 4) {
             return false;
         }
         for (const std::string& octeto: octetos) {

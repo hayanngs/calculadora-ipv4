@@ -19,11 +19,11 @@ private:
 
     int posicao_octeto_quebrado_mascara = 0;
 
-    int cont_bits_octeto_quebrado_mascara = 0;
+    int quantidade_bits_octeto_quebrado_mascara = 0;
 
     int get_complemento_mascara();
 
-    std::vector<int> get_vector_octetos(int octeto_quebrado, int valores, int ultimo_valor);
+    std::vector<int> get_vector_octetos(int octeto_quebrado, int valores);
 public:
     std::vector<int> octetos_ip;
 
@@ -55,6 +55,11 @@ public:
 
     std::string get_ultimo_endereco_utilizavel();
 
+    int valida_octeto_quebrado(int octeto);
+
+    std::string get_mascara_cidr();
+
+    std::string converte_int_to_str(int number);
 };
 
 
